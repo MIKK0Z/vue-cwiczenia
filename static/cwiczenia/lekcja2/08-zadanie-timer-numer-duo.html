@@ -11,7 +11,7 @@
     <div id="app">
         <h1 v-text="title"></h1>
 
-        <div v-for="element in elements" :class="element.class">
+        <div v-for="element in filteredElements" :class="element.class">
             {{element.id}}
         </div>
     </div>
@@ -43,6 +43,11 @@
                     this.interval = undefined;
                 },
             },
+            computed: {
+                filteredElements() {
+                    return this.elements.filter(({ id }) => this.time % 2 === id % 2);
+                }
+            }
         }).mount("#app");
     </script>
 </body>

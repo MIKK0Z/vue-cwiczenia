@@ -20,5 +20,5 @@ app.get("/filenames", (_req, res) => {
 })
 
 app.listen(PORT, () => {
-    console.log(`server started on ${PORT}`);
+    console.log(`server started on http://localhost:${PORT}`);
 })

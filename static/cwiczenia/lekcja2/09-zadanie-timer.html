@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@3.5.3/dist/vue.global.min.js"></script>
+    <link rel="stylesheet" href="/css/07-zadanie.css">
+</head>
+<body>
+    <div id="app">
+        <h1 v-text="title"></h1>
+
+        <div>
+            <h2>{{working ? "pracuj" : "odpoczywaj"}}</h2>
+            <h3>{{formatTime(working ? workTime : pauseTime)}}</h3>
+            <h6>{{interval ? "running" : "paused"}}</h6>
+        </div>
+    </div>
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    title: "zadanie stoper",
+                    workTime: 10,
+                    pauseTime: 0,
+                    working: true,
+                    interval: undefined,
+                };
+            },
+            methods: {
+                increment() {
+                    if (this.working) {
+                        this.workTime -= 1;
+                        if (this.workTime < 0) {
+                            this.working = false;
+                            this.pauseTime = 10;
+                        }
+                    } else {
+                        this.pauseTime -= 1;
+                        if (this.pauseTime < 0) {
+                            this.working = true;
+                            this.workTime = 10;
+                        }
+                    }
+                },
+                start() {
+                    this.interval = setInterval(this.increment, 1000);
+                },
+                pause() {
+                    clearInterval(this.interval);
+                    this.interval = undefined;
+                },
+                formatTime(time) {
+                    return `0:${time > 9 ? "" : "0"}${time}`;
+                }
+            },
+        }).mount("#app");
+    </script>
+</body>
+</html>
