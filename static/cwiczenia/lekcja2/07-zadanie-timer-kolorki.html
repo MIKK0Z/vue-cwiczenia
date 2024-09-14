@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@3.5.3/dist/vue.global.min.js"></script>
+    <link rel="stylesheet" href="/css/07-zadanie.css">
+</head>
+<body>
+    <div id="app">
+        <h1 v-text="title"></h1>
+
+        <div :class="className">
+            <h2>{{ time }}</h2>
+        </div>
+    </div>
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    title: "zadanie stoper kolorki",
+                    time: 0,
+                    interval: undefined,
+                };
+            },
+            methods: {
+                increment() {
+                    this.time += 1;
+                },
+                start() {
+                    this.interval = setInterval(this.increment, 1000);
+                },
+                stop() {
+                    clearInterval(this.interval);
+                    this.interval = undefined;
+                }
+            },
+            computed: {
+                className() {
+                    return this.time % 2 === 0 ? "blue" : "red";
+                }
+            }
+        }).mount("#app");
+    </script>
+</body>
+</html>

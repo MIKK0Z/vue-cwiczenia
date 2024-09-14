@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@3.5.3/dist/vue.global.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <h1 v-text="title"></h1>
+    </div>
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return { title: "v-" };
+            }
+        }).mount("#app");
+
+        app.title += "text";
+    </script>
+</body>
+</html>

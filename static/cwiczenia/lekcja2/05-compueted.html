@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@3.5.3/dist/vue.global.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <h1 v-text="title"></h1>
+
+        <h2>methods:</h2>
+        <p>{{ getRandomNumber() }}</p>
+        <p>{{ getRandomNumber() }}</p>
+        <p>{{ getRandomNumber() }}</p>
+
+        <h2>computed</h2>
+        <p>{{ computedGetRandomNumber }}</p>
+        <p>{{ computedGetRandomNumber }}</p>
+        <p>{{ computedGetRandomNumber }}</p>
+    </div>
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    title: "computed",
+                };
+            },
+            methods: {
+                getRandomNumber (text) {
+                    return Math.random();
+                }
+            },
+            computed: {
+                computedGetRandomNumber () {
+                    return Math.random();
+                }
+            }
+        }).mount("#app");
+    </script>
+</body>
+</html>static/cwiczenia/lekcja2/04-metody.html

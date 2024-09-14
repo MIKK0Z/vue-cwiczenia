@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@3.5.3/dist/vue.global.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <h1>{{title}}</h1>
+
+        <h2>{{ Math.pow(2,5) }}</h2>
+        <h2>{{ new Date().getTime() }}</h2>
+        <h2>{{ Math.random() }}</h2>
+        <h2>{{x > 5 ? "tak" : "nie"}}</h2>
+        <h2 v-text="y.length < 5 ? 'tak' : 'nie'"></h2>
+    </div>
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    title: "parentheses eval",
+                    x: 2,
+                    y: 3,
+                };
+            }
+        }).mount("#app");
+    </script>
+</body>
+</html>

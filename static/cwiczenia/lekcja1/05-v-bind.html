@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@3.5.3/dist/vue.global.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <h1>{{title}}</h1>
+        <a :href="onet_url">
+            <img :width="img_width" :height="img_height" :src="img_src" />
+        </a>
+    </div>
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    title: "v-bind",
+                    onet_url: "http://onet.pl",
+                    img_width: 2000,
+                    img_height: 500,
+                    img_src: "/gfx/cat.png",
+                };
+            }
+        }).mount("#app");
+    </script>
+</body>
+</html>

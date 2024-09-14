@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@3.5.3/dist/vue.global.min.js"></script>
+    <link rel="stylesheet" href="/css/06-zadanie.css">
+</head>
+<body>
+    <div id="app">
+        <h1 v-text="title"></h1>
+
+        <div v-for="car in cars" :class="getClass(car.id)">
+            <h1>{{ getCarData(car.id) }}</h1>
+            <img :src=getCarLink(car.id) alt="car">
+        </div>
+    </div>
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    title: "zadanie auta",
+                    cars: [
+                        {
+                            id: 0,
+                            marka: "mercedes",
+                            model: "benz",
+                            year: 1999,
+                        }, {
+                            id: 1,
+                            marka: "opel",
+                            model: "corsa",
+                            year: 2001,
+                        }, {
+                            id: 2,
+                            marka: "peoget",
+                            model: "308",
+                            year: 2020,
+                        },
+                    ]
+                };
+            },
+            methods: {
+                getCarData(id) {
+                    const foundCar = this.cars.find((car) => car.id === id);
+                    return `${foundCar.marka}-${foundCar.model}-${foundCar.year}`;
+                },
+                getCarLink(id) {
+                    const foundCar = this.cars.find((car) => car.id === id);
+                    return `/gfx/${foundCar.marka}-${foundCar.model}.png`;
+                },
+                getClass(id) {
+                    const foundCar = this.cars.find((car) => car.id === id);
+                    return foundCar.year < 2000 ? "dark" : "light";
+                },
+            },
+        }).mount("#app");
+    </script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script>
+        const options = {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        }
+
+        fetch("/filenames", options)
+            .then(res => res.json())
+            .then(data => generateLinks(data));
+
+        const generateLinks = (data) => {
+            const app = document.querySelector("#app");
+            Object.keys(data).forEach((dir) => {
+                const title = document.createElement("h2");
+                title.innerText = dir;
+                app.appendChild(title);
+
+                const links = document.createElement("div")
+                data[dir].forEach((file) => {
+                    const fileLink = document.createElement("a");
+                    fileLink.innerText = file;
+                    fileLink.href = `cwiczenia/${dir}/${file}`;
+                    links.appendChild(fileLink);
+                })
+
+                app.appendChild(links);
+            })
+        }
+    </script>
+</head>
+<body>
+    <div id="app">
+
+    </div>
+</body>
+</html>
