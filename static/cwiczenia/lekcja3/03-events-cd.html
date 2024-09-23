@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@3.5.3/dist/vue.global.min.js"></script>
+    <style>
+        .active {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h1 v-text="title"></h1>
+
+        <ul>
+            <li v-for="item in items" v-bind:class="{ 'active': item.checked }">
+                {{ item.text }}
+                <input type="checkbox" v-model="item.checked">
+            </li>
+        </ul>
+
+        <input type="text" id="itemInput" @keyup.enter="addItemEnter">
+        <button @click="addItemBtn">add</button>
+    </div>
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    title: "events cd",
+                    items: [
+                        { text: "el 1", checked: true },
+                        { text: "el 2", checked: false },
+                        { text: "el 3", checked: false },
+                    ],
+                };
+            },
+            methods: {
+                addItemBtn() {
+                    this.items.push({
+                        text: itemInput.value,
+                        checked: false,
+                    });
+                    itemInput.value = "";
+                },
+                addItemEnter(event) {
+                    this.items.push({
+                        text: event.target.value,
+                        checked: false,
+                    });
+                    event.target.value = "";
+                },
+            }
+        }).mount("#app");
+    </script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@3.5.3/dist/vue.global.min.js"></script>
+    <style>
+        .active {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h1 v-text="title"></h1>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>produkt</th>
+                    <th>cena</th>
+                    <th>koszyka</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="(product, i) in products">
+                    <td>{{ product.id }}</td>
+                    <td>{{ product.product }}</td>
+                    <td>{{ product.price }}</td>
+                    <td>
+                        <button @click="toggleInCart(i)">{{ product.selected }}</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <button @click="sortAZ">a-z</button>
+        <button @click="sortID">ID</button>
+        <button @click="sortPrice">price</button>
+        <button @click="sortCart">koszyk</button>
+    </div>
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    title: "sklep pt 2 (sort)",
+                    products: [
+                        { id: 1, product: "ksiazka", price: 100, selected: "dodaj do koszyka" },
+                        { id: 3, product: "CD", price: 200, selected: "dodaj do koszyka" },
+                        { id: 2, product: "mleko", price: 300, selected: "dodaj do koszyka" },
+                        { id: 4, product: "buty", price: 400, selected: "dodaj do koszyka" },
+                    ],
+                };
+            },
+            methods: {
+                toggleInCart(i) {
+                    this.products[i].selected = this.products[i].selected === "dodaj do koszyka" ? "w koszyku" : "dodaj do koszyka";
+                },
+                sortAZ() {
+                    this.products = this.products.sort((a, b) => a.product > b.product);
+                },
+                sortID() {
+                    this.products = this.products.sort((a, b) => a.id > b.id);
+                },
+                sortPrice() {
+                    this.products = this.products.sort((a, b) => a.price > b.price);
+                },
+                sortCart() {
+                    this.products = this.products.sort((a, b) => a.selected !== "w koszyku");
+                }
+            }
+        }).mount("#app");
+    </script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@3.5.3/dist/vue.global.min.js"></script>
+    <style>
+        .active {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h1 v-text="title"></h1>
+
+        <table v-if="products.length > 0">
+            <thead>
+                <tr>
+                    <th>lp</th>
+                    <th>produkt</th>
+                    <th>cena</th>
+                    <th>koszyka</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="(product, i) in products">
+                    <td>{{ i }}</td>
+                    <td>{{ product.product }}</td>
+                    <td>{{ product.price }}</td>
+                    <td>
+                        <button @click="toggleInCart(i)">{{ product.selected }}</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p v-else>brak produktow</p>
+    </div>
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    title: "sklep pt 1",
+                    products: [
+                        { product: "ksiazka", price: 100, selected: "dodaj do koszyka" },
+                        { product: "CD", price: 200, selected: "dodaj do koszyka" },
+                        { product: "mleko", price: 300, selected: "dodaj do koszyka" },
+                        { product: "buty", price: 400, selected: "dodaj do koszyka" },
+                    ],
+                };
+            },
+            methods: {
+                toggleInCart(i) {
+                    this.products[i].selected = this.products[i].selected === "dodaj do koszyka" ? "w koszyku" : "dodaj do koszyka";
+                }
+            }
+        }).mount("#app");
+    </script>
+</body>
+</html>

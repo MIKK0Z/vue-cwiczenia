@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@3.5.3/dist/vue.global.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
+    <style>
+        .active {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h1 v-text="title"></h1>
+
+        <div v-if="productsShop1.length > 0 || productsShop2.length > 0">
+
+            <div v-if="productsShop1.length > 0">
+                <h2>sklep 1</h2>
+                <button @click="clearShop1">clear</button>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>produkt</th>
+                            <th>cena</th>
+                            <th>koszyka</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template v-for="(product, i) in productsShop1">
+                            <tr>
+                                <td>{{ product.id }}</td>
+                                <td>{{ product.product }}</td>
+                                <td>{{ product.price }}</td>
+                                <td>
+                                    <button @click="toggleInCart(i, this.productsShop1)">{{ product.selected }}</button>
+                                </td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+
+                <button @click="sortAZ(this.productsShop1)">a-z</button>
+                <button @click="sortID(this.productsShop1)">ID</button>
+                <button @click="sortPrice(this.productsShop1)">price</button>
+                <button @click="sortCart(this.productsShop1)">koszyk</button>
+            </div>
+            <h2 v-else>sklep 1 jest pusty</h2>
+
+            <div v-if="productsShop2.length > 0">
+                <h2>sklep 2</h2>
+                <button @click="clearShop2">clear</button>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>produkt</th>
+                            <th>cena</th>
+                            <th>koszyka</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template v-for="(product, i) in productsShop2">
+                            <tr>
+                                <td>{{ product.id }}</td>
+                                <td>{{ product.product }}</td>
+                                <td>{{ product.price }}</td>
+                                <td>
+                                    <button @click="toggleInCart(i, this.productsShop2)">{{ product.selected }}</button>
+                                </td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+
+                <button @click="sortAZ(this.productsShop2)">a-z</button>
+                <button @click="sortID(this.productsShop2)">ID</button>
+                <button @click="sortPrice(this.productsShop2)">price</button>
+                <button @click="sortCart(this.productsShop2)">koszyk</button>
+            </div>
+            <h2 v-else>sklep 2 jest pusty</h2>
+        </div>
+        <h2 v-else>brak produktow w obu skelpach</h2>
+    </div>
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    title: "sklep pt 3 (template)",
+                    productsShop1: [
+                        { id: 1, product: "ksiazka", price: 100, selected: "dodaj do koszyka" },
+                        { id: 3, product: "CD", price: 200, selected: "dodaj do koszyka" },
+                        { id: 2, product: "mleko", price: 300, selected: "dodaj do koszyka" },
+                        { id: 4, product: "but lewy", price: 400, selected: "dodaj do koszyka" },
+                    ],
+                    productsShop2: [
+                        { id: 1, product: "ksiazka numer duo", price: 100, selected: "dodaj do koszyka" },
+                        { id: 3, product: "VHS", price: 200, selected: "dodaj do koszyka" },
+                        { id: 2, product: "maslanka", price: 300, selected: "dodaj do koszyka" },
+                        { id: 4, product: "but prawy", price: 400, selected: "dodaj do koszyka" },
+                    ],
+                };
+            },
+            methods: {
+                clearShop1() {
+                    this.productsShop1 = [];
+                },
+                clearShop2() {
+                    this.productsShop2 = [];
+                },
+
+                toggleInCart(i, products) {
+                    products[i].selected = products[i].selected === "dodaj do koszyka" ? "w koszyku" : "dodaj do koszyka";
+                },
+                sortAZ(products) {
+                    products = _.sortBy(products, ["product"]);
+                    // products = products.sort((a, b) => a.product > b.product);
+                },
+                sortID(products) {
+                    products = products.sort((a, b) => a.id > b.id);
+                },
+                sortPrice(products) {
+                    products = products.sort((a, b) => a.price > b.price);
+                },
+                sortCart(products) {
+                    products = products.sort((a, b) => a.selected !== "w koszyku");
+                }
+            }
+        }).mount("#app");
+    </script>
+</body>
+</html>

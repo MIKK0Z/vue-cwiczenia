@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@3.5.3/dist/vue.global.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <h1 v-text="title"></h1>
+
+        <div @click="divOnClick">click me</div>
+
+        <hr>
+
+        <select @change="selectChange">
+            <option>opt 1</option>
+            <option>opt 2</option>
+            <option>opt 3</option>
+        </select>
+        <p>{{ selectedValue }}</p>
+
+        <hr>
+
+        <input type="range" @input="rangeChange">
+        <p>{{ rangeValue }}</p>
+
+        <hr>
+
+        <input type="checkbox" @input="onCheckboxChecked">
+        <p>{{ checkboxChecked }}</p>
+
+        <hr>
+
+        <button @click="incrementPower">increment power</button>
+        <button @click="powerMethod">power</button>
+
+        <p>power: {{ power }}</p>
+        <p>two powered: {{ twoPowered }}</p>
+    </div>
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    title: "events",
+                    selectedValue: undefined,
+                    rangeValue: undefined,
+                    checkboxChecked: undefined,
+                    power: 0,
+                    twoPowered: undefined,
+                };
+            },
+            methods: {
+                divOnClick() {
+                    console.log("div clicked");
+                },
+                selectChange(event) {
+                    this.selectedValue = event.target.value;
+                },
+                rangeChange(event) {
+                    this.rangeValue = event.target.value;
+                },
+                onCheckboxChecked(event) {
+                    this.checkboxChecked = event.target.checked;
+                },
+                incrementPower() {
+                    this.power += 1;
+                },
+                powerMethod() {
+                    this.twoPowered = Math.pow(2, this.power);
+                }
+            }
+        }).mount("#app");
+    </script>
+</body>
+</html>
