@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="https://cdn.jsdelivr.net/npm/vue@3.5.3/dist/vue.global.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
     <style>
         .active {
             color: red;
@@ -117,8 +116,7 @@
                     products[i].selected = products[i].selected === "dodaj do koszyka" ? "w koszyku" : "dodaj do koszyka";
                 },
                 sortAZ(products) {
-                    products = _.sortBy(products, ["product"]);
-                    // products = products.sort((a, b) => a.product > b.product);
+                    products = products.sort((a, b) => a.product > b.product);
                 },
                 sortID(products) {
                     products = products.sort((a, b) => a.id > b.id);
