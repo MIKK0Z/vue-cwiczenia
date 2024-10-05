@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@3.5.3/dist/vue.global.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <h1>{{ title }}</h1>
+
+        <form action="/" method="POST">
+            <h2>akcesoria</h2>
+            <label>
+                <input type="checkbox" name="mouse" v-model="mouse" true-value="yes" false-value="no">
+                mysz
+            </label>
+            <br>
+
+            <label>
+                <input type="checkbox" name="laptop" v-model="laptop" true-value="yes" false-value="no">
+                laptop
+            </label>
+            <br>
+
+            <label>
+                <input type="checkbox" name="pc" v-model="pc" true-value="yes" false-value="no">
+                koputer stacjonanrny
+            </label>
+            <br>
+
+            <h2>forma obioru</h2>
+            <label>
+                <input type="radio" name="delivery" v-model="delivery" value="courier">
+                kurier
+            </label>
+            <br>
+
+            <label>
+                <input type="radio" name="delivery" v-model="delivery" value="mail">
+                poczta
+            </label>
+            <br>
+
+            <label>
+                <input type="radio" name="delivery" v-model="delivery" value="self">
+                osobscie
+            </label>
+            <br>
+
+            <select name="delivery" v-model="delivery">
+                <option value="courier">kurier</option>
+                <option value="mail">poczta</option>
+                <option value="self">osobscie</option>
+            </select>
+
+            <h2>potwierdznie</h2>
+            <label>
+                <input type="checkbox" name="conf" v-model="conf">
+                potwierdzam
+            </label>
+            <br>
+
+            <button type="submit" :disabled="isDisabled">wyslij</button>
+        </form>
+
+    </div>
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    title: "koszyk",
+                    mouse: "no",
+                    laptop: "no",
+                    pc: "no",
+                    delivery: "",
+                    conf: false,
+                };
+            },
+            computed: {
+                isDisabled() {
+                    return !(this.mouse !== "no" || this.laptop !== "no" || this.pc !== "no") || this.delivery === "" || !this.conf;
+                }
+            }
+        }).mount("#app");
+    </script>
+</body>
+</html>

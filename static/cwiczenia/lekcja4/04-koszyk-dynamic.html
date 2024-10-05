@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@3.5.3/dist/vue.global.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <h1>{{ title }}</h1>
+
+        <form action="/" method="POST">
+            <h2>akcesoria</h2>
+            <template v-for="product in products">
+                <label>
+                    <input type="checkbox" :name="product.name" v-model="product.checked" true-value="yes" false-value="no">
+                    {{ product.name }} | {{ formatPrice(product.price, product.currency) }}
+                </label>
+                <br>
+            </template>
+
+            <h2>forma obioru</h2>
+            <template v-for="deliveryOption in deliveryOptions">
+                <label>
+                    <input type="radio" name="delivery" v-model="delivery" :value="deliveryOption.option">
+                    {{ deliveryOption.option }}
+                </label>
+                <br>
+            </template>
+
+            <select name="delivery" v-model="delivery">
+                <template v-for="deliveryOption in deliveryOptions">
+                    <option :value="deliveryOption.option">{{ deliveryOption.option }}</option>
+                </template>
+            </select>
+
+            {{ delivery }}
+
+            <h2>potwierdznie</h2>
+            <label>
+                <input type="checkbox" name="conf" v-model="conf">
+                potwierdzam
+            </label>
+            <br>
+
+            <button type="submit" :disabled="!isDataOk">wyslij</button>
+        </form>
+
+    </div>
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    title: "koszyk dynamic",
+                    products: [
+                        { name: "Myszka", checked: "no", price: 30, currency: "PLN" },
+                        { name: "Laptop", checked: "no", price: 2000, currency: "GBP" },
+                        { name: "Komputer stacjonanrny", checked: "no", price: 4000, currency: "PLN" },
+                        { name: "Monitor", checked: "no", price: 1000, currency: "GBP" },
+                        { name: "Glosniki", checked: "no", price: 600, currency: "USD" },
+                    ],
+                    deliveryOptions: [
+                        { option: "Kurier" },
+                        { option: "Poczta" },
+                        { option: "Osobiscie" },
+                    ],
+                    delivery: "",
+                    conf: false,
+                };
+            },
+            methods: {
+                formatPrice(price, currency) {
+                    return new Intl.NumberFormat("pl-PL", {
+                        style: "currency",
+                        currency,
+                        currencyDisplay: "name",
+                    }).format(price);
+                },
+            },
+            computed: {
+                isDataOk() {
+                    const anyProductSelected = this.products.some((product) => product.checked === "yes");
+                    const isDeliverySelected = this.delivery !== "";
+                    return this.conf && anyProductSelected && isDeliverySelected;
+                }
+            }
+        }).mount("#app");
+    </script>
+</body>
+</html>

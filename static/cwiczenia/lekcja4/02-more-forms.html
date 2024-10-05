@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@3.5.3/dist/vue.global.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <h1>{{ title }}</h1>
+
+        <h2>uzupelnij:</h2>
+
+        <form action="/" method="POST">
+            <label>
+                <input type="text" name="name" v-model="name">
+                len: {{ name.length }}
+            </label>
+            <br>
+
+            <label>
+                <input type="text" name="surname" v-model="surname">
+                len: {{ surname.length }}
+            </label>
+            <br>
+
+            <label>
+                <input type="text" name="profesion" v-model="profesion">
+                len: {{ profesion.length }}
+            </label>
+            <br>
+
+            <label>
+                <input type="text" name="pay" v-model="pay">
+                len: {{ pay.length }}
+            </label>
+            <br>
+
+            <button type="submit" :disabled="isDisabled">wyslij</button>
+        </form>
+
+        <h2>sprawdz:</h2>
+        <p><b>Imie:</b> {{ name }}</p>
+        <p><b>Nazwisko:</b> {{ surname }}</p>
+        <p><b>Zawod:</b> {{ profesion }}</p>
+        <p><b>Wynagrodznie:</b> {{ pay }}</p>
+    </div>
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    title: "more forms",
+                    name: "",
+                    surname: "",
+                    profesion: "",
+                    pay: "",
+                };
+            },
+            computed: {
+                isDisabled() {
+                    return this.name === "" || this.surname === "" || this.profesion === "" || this.pay === "";
+                }
+            }
+        }).mount("#app");
+    </script>
+</body>
+</html>
