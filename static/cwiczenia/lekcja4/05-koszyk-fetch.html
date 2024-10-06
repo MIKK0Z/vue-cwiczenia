@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@3.5.3/dist/vue.global.min.js"></script>
+    <style>
+        img {
+            height: 4rem;
+        }
+
+        form {
+            display: flex;
+        }
+
+        h4 {
+            margin-block: .2rem;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h1>{{ title }}</h1>
+
+        <form action="/" method="POST">
+            <div>
+                <h2>akcesoria</h2>
+                <template v-for="product in products">
+                    <label>
+                        <input type="checkbox" :name="product.name" v-model="product.checked">
+                        {{ product.name }}
+                    </label>
+                    <br>
+                </template>
+
+                <h2>forma obioru: {{ delivery }}</h2>
+                <template v-for="deliveryOption in deliveryOptions">
+                    <label>
+                        <input type="radio" name="delivery" v-model="delivery" :value="deliveryOption.name">
+                        {{ deliveryOption.name }}
+                        <img :src="getImagePath(deliveryOption.name)" :alt="deliveryOption.name">
+                    </label>
+                    <br>
+                </template>
+                
+                <h2>forma platnosci: {{ payment }}</h2>
+                <template v-for="paymentOption in paymentOptions">
+                    <label>
+                        <input type="radio" name="payment" v-model="payment" :value="paymentOption.name">
+                        {{ paymentOption.name }}
+                        <img :src="getImagePath(paymentOption.name)" :alt="paymentOption.name">
+                    </label>
+                    <br>
+                </template>
+
+                <h2>potwierdznie</h2>
+                <label>
+                    <input type="checkbox" name="conf" v-model="conf">
+                    potwierdzam
+                </label>
+                <br>
+            </div>
+
+            <div v-if="isAnyProductSelected">
+                <h2>Podsumowanie</h2>
+                <h3>akcesoria:</h3>
+                <h4 v-for="product in selected">{{product.name}}</h4>
+                <hr>
+                <h3>forma odbioru: {{ delivery }}</h3>
+                <hr>
+                <h3>forma platnosci: {{ payment }}</h3>
+                <hr>
+                <button type="submit" :disabled="!isDataOk">wyslij</button>
+            </div>
+        </form>
+    </div>
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    title: "koszyk fetch",
+                    products: [],
+                    deliveryOptions: [],
+                    paymentOptions: [],
+                    delivery: "",
+                    payment: "",
+                    conf: false,
+                };
+            },
+            methods: {
+                getImagePath(name) {
+                    return `/gfx/${name}.png`;
+                },
+            },
+            computed: {
+                isDataOk() {
+                    const anyProductSelected = this.products.some((product) => product.checked);
+                    const isDeliverySelected = this.delivery !== "";
+                    const isPaymentSelected = this.payment !== "";
+                    return this.conf && anyProductSelected && isDeliverySelected && isPaymentSelected;
+                },
+                selected() {
+                    return this.products.filter((product) => product.checked);
+                },
+                isAnyProductSelected() {
+                    return this.products.some((product) => product.checked);
+                }
+            },
+            async created() {
+                const req = await fetch("http://localhost:3000/getData", {
+                    method: "GET",
+                });
+
+                const { products, deliveryOptions, paymentOptions } = await req.json();
+
+                this.products = products.map((product) => { return { ...product, checked: false }});
+                this.deliveryOptions = deliveryOptions;
+                this.paymentOptions = paymentOptions;
+
+                this.delivery = this.deliveryOptions[0].name;
+                this.payment = this.paymentOptions[0].name;
+            },
+        }).mount("#app");
+    </script>
+</body>
+</html>

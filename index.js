@@ -16,7 +16,38 @@ app.get("/filenames", (_req, res) => {
         files[dir] = filenames;
     })
 
-    res.send(JSON.stringify(files)); 
+    res.json(files);
+})
+
+app.get("/getData", (_req, res) => {
+    const products = [
+        { name: "Myszka" },
+        { name: "Monitor" },
+        { name: "Laptop" },
+        { name: "Klawiatura" },
+        { name: "Kabel" },
+        { name: "RAM" },
+        { name: "CPU" },
+        { name: "GPU" },
+    ];
+    const deliveryOptions = [
+        { name: "InPOST" },
+        { name: "DPD" },
+        { name: "Poczta" },
+        { name: "Osobiscie" },
+    ];
+    const paymentOptions = [
+        { name: "BLIK" },
+        { name: "PayPal" },
+        { name: "Przelewy24" },
+        { name: "Visa" },
+    ];
+
+    res.json({
+        products,
+        deliveryOptions,
+        paymentOptions,
+    });
 })
 
 app.listen(PORT, () => {
