@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@3.5.3/dist/vue.global.min.js"></script>
+    <style>
+        img {
+            height: 4rem;
+        }
+
+        form {
+            display: flex;
+        }
+
+        h4 {
+            margin-block: .2rem;
+        }
+
+        .card {
+            border: 1px solid black;
+            display: inline-block;
+            padding: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h1>{{ title }}</h1>
+
+        <card-component name="Jan" surname="Kowalski" age="30" profession="Informatyk"></card-component>
+        <card-component name="Adam" surname="Nowak" age="40" profession="Menager"></card-component>
+        <card-component name="Anna" surname="aaaa" age="25" profession="Ksiegowa"></card-component>
+    </div>
+    <script>
+        const CardComponent = {
+            template: `
+            <div class="card">
+                <h3>Wizytowka</h3>
+                <p>name: {{ this.name }}</p>
+                <p>surname: {{ this.surname }}</p>
+                <p>age: {{ this.age }}</p>
+                <p>profession: {{ this.profession }}</p>
+
+
+                <pre>
+{{ this.$props }}
+                </pre>
+            </div>
+            `,
+            props: ["name", "surname", "age", "profession"],
+        }
+
+        const app = Vue.createApp({
+            data() {
+                return {
+                    title: "props",
+                };
+            },
+            components: {
+                "card-component": CardComponent,
+            }
+        }).mount("#app");
+    </script>
+</body>
+</html>

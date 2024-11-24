@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@3.5.3/dist/vue.global.min.js"></script>
+    <style>
+        img {
+            height: 4rem;
+        }
+
+        form {
+            display: flex;
+        }
+
+        h4 {
+            margin-block: .2rem;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h1>{{ title }}</h1>
+
+        <child-component :prop-a="a"></child-component>
+        <child-component :prop-a="a"></child-component>
+        <child-component :prop-a="a"></child-component>
+        <button @click="add">add</button>
+    </div>
+    <script>
+        const ChildComponent = {
+            template: `
+            <div>
+                <h3>a: {{ this.propA }}</h3>
+            </div>
+            `,
+            props: ["propA"],
+        }
+
+        const app = Vue.createApp({
+            data() {
+                return {
+                    title: "parent to child",
+                    a: 0,
+                };
+            },
+            components: {
+                "child-component": ChildComponent,
+            },
+            methods: {
+                add() {
+                    this.a += 1;
+                }
+            }
+        }).mount("#app");
+    </script>
+</body>
+</html>

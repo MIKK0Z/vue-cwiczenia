@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@3.5.3/dist/vue.global.min.js"></script>
+    <style>
+        img {
+            height: 4rem;
+        }
+
+        form {
+            display: flex;
+        }
+
+        h4 {
+            margin-block: .2rem;
+        }
+
+        .items {
+            background-color: red
+        }
+
+        .addItem {
+            background-color: green
+        }
+
+        .title {
+            background-color: blue
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h1>{{ title }}</h1>
+
+        <items-component></items-component>
+        <items-component></items-component>
+        <items-component></items-component>
+        <add-item-component></add-item-component>
+        <title-component></title-component>
+    </div>
+    <script>
+        const ItemsComponent = {
+            template: `
+                <div class="items">
+                    <h3>items component</h3>
+                </div>
+            `,
+        }
+        
+        const AddItemComponent = {
+            template: `
+                <div class="addItem">
+                    <h3>add item component</h3>
+                </div>
+            `,
+        }
+
+        const TitleComponent = {
+            template: `
+                <div class="title">
+                    <h3>title component</h3>
+                </div>
+            `,
+        }
+
+        const app = Vue.createApp({
+            data() {
+                return {
+                    title: "rejestracja komponentow",
+                };
+            },
+            components: {
+                "items-component": ItemsComponent,
+                "add-item-component": AddItemComponent,
+                "title-component": TitleComponent,
+            }
+        }).mount("#app");
+    </script>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@3.5.3/dist/vue.global.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <h1>{{ title }}</h1>
+
+        <items-component></items-component>
+        <add-item-component></add-item-component>
+        <title-component></title-component>
+    </div>
+    <script>
+        const appData = {
+            title: "global data",
+            items: [
+                { 
+                    text: "el 1",
+                    checked: false,
+                },
+                { 
+                    text: "el 2",
+                    checked: false,
+                },
+                { 
+                    text: "el 3",
+                    checked: false,
+                },
+            ]
+        }
+        
+        const ItemsComponent = {
+            data() {
+                return appData;
+            },
+            template: `
+                <div>
+                    <h3>items component</h3>
+                    <template v-for="item in items">
+                        <label>
+                            <input type="checkbox" v-model="item.checked">
+                            {{ item.text }}
+                        </label>
+                        <br>
+                    </template>
+                </div>
+            `,
+        }
+        
+        const AddItemComponent = {
+            template: `
+                <div>
+                    <h3>add item component</h3>
+                    <input type="text" v-model="newItem">
+                    <button @click="addItem">add item</button>
+                </div>
+            `,
+            data() {
+                return {
+                    ...appData,
+                    newItem: "",
+                };
+            },
+            methods: {
+                addItem() {
+                    this.items.push({
+                        text: this.newItem,
+                        checked: false,
+                    });
+                    this.newItem = "";
+                },
+            },
+        }
+
+        const TitleComponent = {
+            template: `
+                <div>
+                    <h3>title component</h3>
+                    <input type="text" v-model="title">
+                </div>
+            `,
+            data() {
+                return appData;
+            },
+        }
+
+        const app = Vue.createApp({
+            data() {
+                return appData;
+            },
+            components: {
+                "items-component": ItemsComponent,
+                "add-item-component": AddItemComponent,
+                "title-component": TitleComponent,
+            },
+        }).mount("#app");
+    </script>
+</body>
+</html>

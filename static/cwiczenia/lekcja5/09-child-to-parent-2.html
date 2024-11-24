@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@3.5.3/dist/vue.global.min.js"></script>
+    <style>
+        .component {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h1>{{ title }}</h1>
+        <h3>{{ power }}</h3>
+
+        <child-component v-for="val in [2, 3, 4]" :update-function="changeX" :value="val"></child-component>
+    </div>
+    <script>
+        const ChildComponent = {
+            template: `
+            <div>
+                <p>value: {{ this.value }}</p>
+                <button @click="updateFunction(this.value)">update</button>
+            </div>
+            `,
+            props: ["updateFunction", "value"],
+        }
+
+        const app = Vue.createApp({
+            data() {
+                return {
+                    title: "child to parent",
+                    x: 0,
+                };
+            },
+            components: {
+                "child-component": ChildComponent,
+            },
+            methods: {
+                changeX(val) {
+                    this.x = val;
+                }
+            },
+            computed: {
+                power() {
+                    return Math.pow(this.x, 2);
+                }
+            }
+        }).mount("#app");
+    </script>
+</body>
+<

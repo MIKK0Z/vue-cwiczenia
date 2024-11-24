@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@3.5.3/dist/vue.global.min.js"></script>
+    <style>
+        img {
+            height: 4rem;
+        }
+
+        form {
+            display: flex;
+        }
+
+        h4 {
+            margin-block: .2rem;
+        }
+
+        .card {
+            border: 1px solid black;
+            display: inline-block;
+            padding: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h1>{{ title }}</h1>
+
+        <child-component v-for="x in data" :prop-x="x"></child-component>
+    </div>
+    <script>
+        const ChildComponent = {
+            template: `
+            <div class="card">
+                <p>prop x: {{ this.propX }}</p>
+                <p>data x: {{ this.x }}</p>
+
+                <button @click="add">add</button>
+
+                <pre>
+{{ this.$props }}
+                </pre>
+                <pre>
+{{ this.$data }}
+                </pre>
+            </div>
+            `,
+            props: ["propX"],
+            data() {
+                return {
+                    x: this.propX,
+                };
+            },
+            methods: {
+                add() {
+                    this.x += 1;
+                },
+            },
+        }
+
+        const app = Vue.createApp({
+            data() {
+                return {
+                    title: "props & data",
+                    data: [1, 4, 16],
+                };
+            },
+            components: {
+                "child-component": ChildComponent,
+            },
+        }).mount("#app");
+    </script>
+</body>
+</html>
